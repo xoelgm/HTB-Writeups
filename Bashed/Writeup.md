@@ -118,15 +118,13 @@ sudo -l
 sudo -u scriptmanager /bin/bash
 ```
 
-![Cambio a scriptmanager](./images/scriptmanager-shell.png)
-
 ### Buscar archivos con permisos
 
 ```bash
 find / -user scriptmanager 2>/dev/null | grep -v "proc"
 ```
 
-![find test.py](./images/find-testpy.png)
+![find test.py](./images/scriptmanager-bash.png)
 
 ##### Resultado:
 - Archivo `/scripts/test.py` con permisos de escritura.
