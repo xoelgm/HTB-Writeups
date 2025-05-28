@@ -60,7 +60,7 @@ nmap -sC -sV -p80,135,445,50000 10.10.10.63
 - `-sC`: Usa los scripts predeterminados de Nmap.
 - `-sV`: Detecta versiones de servicios.
   
-![Nmap Scan -sCV](./images/nmap-ss.png)
+![Nmap Scan -sCV](./images/nmap-scv.png)
   
 #### Resultado:
 - Puerto **80** → IIS 10.0 con el título “Ask Jeeves”.
