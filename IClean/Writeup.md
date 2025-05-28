@@ -31,6 +31,8 @@ sudo nano /etc/hosts
 whatweb http://capiclean.htb
 ```
 
+![WhatWeb Scan](./images/whatweb.png)
+
 #### Resultados:
 - Python 3.10.12, Werkzeug 2.3.7
 - Apache 2.4.52
@@ -53,6 +55,8 @@ nmap -sS -sV -p- --min-rate=5000 -n -Pn 10.10.11.12
 - `--min-rate=5000`: Aumenta la velocidad del escaneo.
 - `-n`: No resuelve DNS.
 - `-Pn`: Omite el ping previo al escaneo.
+
+![Nmap Scan -sCV](./images/nmap-scv.png)
   
 #### Resultado:
 - Puerto **22/tcp** abierto → OpenSSH 8.9p1
@@ -63,6 +67,8 @@ nmap -sS -sV -p- --min-rate=5000 -n -Pn 10.10.11.12
 ```bash
 python3 dirsearch.py -u http://capiclean.htb -e php,html,txt -x 403,404
 ```
+
+![Dirsearch Output](./images/dirsearch.png)
 
 #### Parámetros:
 - `-u`: URL objetivo.
@@ -81,6 +87,8 @@ gobuster dir -u http://capiclean.htb -w /usr/share/wordlists/dirbuster/directory
 - `-w`: Wordlist utilizada.
 - `-x`: Extensiones a añadir a las rutas.
 - `-t`: Número de hilos para acelerar el proceso.
+
+![Gobuster Output](./images/gobuster.png)
 
 #### Resultado:
 - Se descubrieron rutas interesantes: `/quote`, `/login`, `/dashboard`, `/choose`, y `/team`.
@@ -102,6 +110,8 @@ En la máquina atacante se lanzó un servidor HTTP para capturar la cookie:
 ```bash
 python3 -m http.server 8000
 ```
+
+![XSS Cookie Capture](./images/xss-cookie.png)
 
 Luego, la cookie se copió manualmente al navegador en almacenamiento → cookies para acceder al panel `/dashboard`.
 
@@ -129,6 +139,8 @@ nc -lvnp 4444
 #### Resultado:
 - Shell obtenida como usuario `www-data`.
 
+![SSTI Shell - www-data](./images/ssti-shell.png)
+
 ---
 
 ## ⬆️ Fase 4: Escalada de privilegios
@@ -143,6 +155,8 @@ Se encontraron credenciales de MySQL.
 mysql -uiclean -ppxCsmnGLckUb -Dcapiclean -e "SHOW TABLES;"
 mysql -uiclean -ppxCsmnGLckUb -Dcapiclean -e "SELECT * FROM users;"
 ```
+
+![Credenciales en app.py](./images/app_py_credentials.png)
 
 #### Resultado:
 - Las contraseñas estaban en hashes.
@@ -175,6 +189,8 @@ fg
 sudo -l
 ```
 
+![Sudo qpdf](./images/sudo-l.png)
+
 #### Resultado:
 - El usuario `consuela` puede ejecutar `qpdf` como cualquier usuario.
 
@@ -199,8 +215,12 @@ Se extrajo la clave del PDF, se guardó en un archivo `id_rsa` y se estableció 
 ssh -i id_rsa root@localhost
 ```
 
+![QPDF Exfiltración](./images/qpdf-attachment.png)
+
 #### Resultado:
 - Acceso como `root` obtenido.
+
+![SSH Root Access](./images/ssh-root.png)
 
 ---
 
@@ -214,11 +234,15 @@ ssh -i id_rsa root@localhost
 cat /home/consuela/user.txt
 ```
 
+![User Flag](./images/user-flag.png)
+
 #### Flag de root:
 
 ```bash
 cat /root/root.txt
 ```
+
+![Root Flag](./images/root-flag.png)
 
 ---
 
